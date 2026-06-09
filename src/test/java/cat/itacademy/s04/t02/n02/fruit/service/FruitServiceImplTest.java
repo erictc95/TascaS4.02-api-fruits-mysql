@@ -6,6 +6,7 @@ import cat.itacademy.s04.t02.n02.fruit.exception.FruitNotFoundException;
 import cat.itacademy.s04.t02.n02.fruit.model.Fruit;
 import cat.itacademy.s04.t02.n02.fruit.model.Provider;
 import cat.itacademy.s04.t02.n02.fruit.repository.FruitRepository;
+import cat.itacademy.s04.t02.n02.fruit.repository.ProviderRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -25,6 +26,9 @@ import static org.mockito.Mockito.when;
 public class FruitServiceImplTest {
 
     @Mock
+    private ProviderRepository providerRepository;
+
+    @Mock
     private FruitRepository fruitRepository;
 
     @InjectMocks
@@ -37,6 +41,10 @@ public class FruitServiceImplTest {
         Fruit savedFruit = new Fruit("Apple", 10, new Provider("Fresh Fruits", "Spain"));
 
         when(fruitRepository.save(any(Fruit.class))).thenReturn(savedFruit);
+
+        Provider provider = new Provider("Fresh Fruits", "Spain");
+
+        when(providerRepository.findById(1L)).thenReturn(Optional.of(provider));
 
         var response = fruitService.createFruit(request);
 
@@ -95,6 +103,11 @@ public class FruitServiceImplTest {
         when(fruitRepository.findById(1L)).thenReturn(Optional.of(fruit));
 
         when(fruitRepository.save(any(Fruit.class))).thenReturn(fruit);
+
+        Provider provider = new Provider("Fresh Fruits", "Spain");
+
+        when(providerRepository.findById(1L))
+                .thenReturn(Optional.of(provider));
 
         var response = fruitService.updateFruit(1L, request);
 

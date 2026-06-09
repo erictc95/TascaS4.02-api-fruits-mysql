@@ -67,7 +67,7 @@ public class FruitControllerTest {
         mockMvc.perform(post("/fruits")
                         .contentType("application/json")
                         .content(objectMapper.writeValueAsString(request)))
-                .andExpect(status().isCreated())
-                .andExpect(jsonPath("$.name").value("Banana"));
+                        .andExpect(status().isCreated())
+                        .andExpect(jsonPath("$.name").value("Banana"));
     }
 }
